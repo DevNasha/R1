@@ -1,66 +1,47 @@
-import { useState } from 'react'
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  Typography,
-  InputAdornment,
-  IconButton
-} from '@mui/material'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { useNavigate, useLocation } from 'react-router-dom'
+import React from "react";
+import { FaUser, FaLock } from "react-icons/fa";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [show, setShow] = useState(false)
-  const navigate = useNavigate()
-  const location = useLocation() as any
-
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Mock auth
-    if (email && password) {
-      localStorage.setItem('rs_auth_token', 'mock-token')
-      const to = location.state?.from?.pathname || '/dashboard'
-      navigate(to, { replace: true })
-    }
-  }
-
   return (
-    <Box sx={{ minHeight: '100vh', display: 'grid', placeItems: 'center', bgcolor: 'background.default' }}>
-      <Card sx={{ width: 380 }}>
-        <CardContent>
-          <Typography variant="h5" gutterBottom>Recruitment Suite</Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
-            Sign in to continue
-          </Typography>
-          <Box component="form" onSubmit={onSubmit} sx={{ mt: 2, display: 'grid', gap: 2 }}>
-            <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth required />
-            <TextField
-              label="Password"
-              type={show ? 'text' : 'password'}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setShow((s) => !s)} edge="end">
-                      {show ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-700 via-purple-600 to-pink-500">
+      <div className="w-full max-w-md p-8 bg-white/30 rounded-2xl shadow-2xl backdrop-blur-lg flex flex-col items-center justify-center">
+        <h2 className="text-4xl font-extrabold text-center text-white mb-7 drop-shadow-2xl tracking-tight">
+          Welcome Back!
+        </h2>
+        <form className="space-y-6 w-full">
+          <div className="flex items-center bg-white/80 rounded-lg px-4 py-3 shadow-inner focus-within:ring-2 focus-within:ring-pink-400">
+            <FaUser className="text-pink-400 mr-3 text-xl" />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full bg-transparent outline-none text-gray-900 font-medium placeholder:text-gray-500"
             />
-            <Button type="submit" variant="contained" size="large">Sign In</Button>
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
-  )
+          </div>
+          <div className="flex items-center bg-white/80 rounded-lg px-4 py-3 shadow-inner focus-within:ring-2 focus-within:ring-pink-400">
+            <FaLock className="text-pink-400 mr-3 text-xl" />
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full bg-transparent outline-none text-gray-900 font-medium placeholder:text-gray-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-3 px-4 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-bold rounded-lg shadow-lg hover:scale-105 hover:shadow-2xl transition-transform duration-200 border border-white/20"
+          >
+            Log In
+          </button>
+        </form>
+        <div className="mt-7 text-center text-white opacity-90">
+          <span>Don’t have an account? </span>
+          <a
+            href="/signup"
+            className="underline text-pink-200 font-semibold hover:text-white transition-colors"
+          >
+            Sign up
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 }
